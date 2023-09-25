@@ -1,17 +1,27 @@
 package jogo.poo;
 
 public class Armadura {
+    String nome;
     int nivel;
 
-    public Armadura(int nivel) {
+    public Armadura(String nome, int nivel) {
         this.nivel = nivel;
+        this.nome = nome;
     }
 
-    public int nivelDaProtecao() throws NivelDaArmaduraException {
-        if(this.nivel > 5 || this.nivel < 0) {
-            throw new NivelDaArmaduraException();
-        } else {
-            return this.nivel;
-        }
+    public String getNome(){
+        return this.nome;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public int getNivelDaProtecao() {
+        return this.nivel;
+    }
+
+    public void setNivelDaProtecao(int nivel) {
+        this.nivel = nivel;
     }
 }
