@@ -71,6 +71,10 @@ public class Personagem {
             return;
         }
 
+        if(arma.getManaGasto() > 0){
+            setMana(this.mana - arma.getManaGasto());
+        }
+        
         System.out.printf("%s atacou %s com %s%n", this.getNome(), outro.getNome(), arma.getNome());
         outro.receberDano(arma.getDano());
     }

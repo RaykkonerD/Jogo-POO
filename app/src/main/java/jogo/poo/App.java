@@ -4,7 +4,21 @@ import java.util.Scanner;
 
 public class App {
     void iniciar() {
+        double chances = Math.random()*10;
 
+        if(chances < 3){
+            System.out.println("Você encontrou um inimigo!");
+            // Batalhar();
+        } else if(chances < 5){
+            System.out.println("Você encontrou um item!");
+            // PegarItem();
+        } else if(chances < 7){
+            System.out.println("Você encontrou uma bifurcação!");
+            // Escolher caminhon 1 ou 2
+        } else {
+            System.out.println("Nada encontrado. Continuar? (s - Sim | n - Não)");
+            // Escolha se continuar ou não
+        }
     }
 
     int menuInicial() {
@@ -35,22 +49,25 @@ public class App {
         madruga.recuperarVida(corote);
         madruga.atacar(raimundo);
 
-    //     App jogo = new App();
-    //     int opcaoEscolhida = jogo.menuInicial();
+        App jogo = new App();
+        int opcaoEscolhida = jogo.menuInicial();
 
-    //     while (opcaoEscolhida != 3) {
-    //         switch (opcaoEscolhida) {
-    //             case 1:
-    //                 jogo.iniciar();
-    //                 break;
-    //             case 2:
-    //                 // chama opções
-    //                 break;
-    //             default:
-    //                 System.out.println("[ERRO]: Opção inválida!");
-    //                 break;
-    //         }
-    //         opcaoEscolhida = jogo.menuInicial();
-    //     }
+        while (opcaoEscolhida != 3) {
+            switch (opcaoEscolhida) {
+                case 1:
+                    jogo.iniciar();
+                    break;
+                case 2:
+                    System.out.println("=== Opções ===");
+                    System.out.println("1 - Ver inventário");
+                    System.out.println("2 - Perfil");
+                    System.out.println("3 - Sair");
+                    break;
+                default:
+                    System.out.println("[ERRO]: Opção inválida!");
+                    break;
+            }
+            opcaoEscolhida = jogo.menuInicial();
+        }
     }
 }

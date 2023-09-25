@@ -9,6 +9,7 @@ public class Arma {
         this.nome = nome;
         this.dano = dano;
     }
+    
     public Arma(String nome, int dano, int manaGasto) {
         this.nome = nome;
         this.dano = dano;
