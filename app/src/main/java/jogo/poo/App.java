@@ -32,13 +32,14 @@ public class App {
         System.out.print("Escolha seu nickname: ");
         String nome = entrada.nextLine();
 
+
         Personagem jogador = new Personagem(nome);
 
         double chances = Math.random()*10;
         System.out.print("Explorar? (s - Sim | n - Sair): ");
         String explorando = entrada.next();
 
-        while(explorando != "n"){
+        while(!explorando.equals("n")){
 
             if(chances < 2){
                 System.out.println("Você encontrou um inimigo!");
