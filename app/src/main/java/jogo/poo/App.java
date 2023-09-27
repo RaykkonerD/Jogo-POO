@@ -127,8 +127,6 @@ public class App {
             System.out.print("Explorar? (s - Sim | n - Sair): ");
             explorando = entrada.next();
         }
-
-        entrada.close();
     }
 
     void menuInicial() {
@@ -170,7 +168,7 @@ public class App {
         while(true){
             System.out.println("=== Opções ===");
             System.out.println("1 - Ver inventário");
-            System.out.println("2 - Usar item");
+            System.out.println("2 - Perfil");
             System.out.println("3 - Sair");
             System.out.print("Opção: ");
 
@@ -186,7 +184,13 @@ public class App {
                     }
                     break;
                 case 2:
-                    // Perfil
+                    if(this.jogador != null){
+                        System.out.println("Nome: " + this.jogador.getNome());
+                        System.out.println("Arma: " + this.jogador.getArma() != null ? this.jogador.getArma().getNome() + " dano " + this.jogador.getArma().getDano() : "nenhuma");
+                        System.out.println("Armadura: " + this.jogador.getArmadura() != null ? this.jogador.getArmadura().getNome() + " nível " + this.jogador.getArmadura().getNivelDaProtecao() : "nenhuma");
+                    } else {
+                        System.out.println("[Jogador não definido]");
+                    }
                     break;
                 case 3:
                     return;
