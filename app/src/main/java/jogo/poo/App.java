@@ -34,39 +34,54 @@ public class App {
 
         Personagem jogador = new Personagem(nome);
 
-        double chances = Math.random()*10;
         System.out.print("Explorar? (s - Sim | n - Sair): ");
         String explorando = entrada.next();
 
-        while(explorando != "n"){
+        while(!explorando.equals("n")){
+            double chances = Math.random()*10;
 
-            if(chances < 2){
-                System.out.println("Você encontrou um inimigo!");
-                // Batalhar();
-            } else if(chances < 5){
-                if(chances < 2.5){
-                    System.out.println("Você encontrou uma poção!");
-
-                    int randomico = (int)(Math.random()*10);
-                    Pocao novaPocao = new Pocao("Água", randomico);
-
-                    jogador.recuperarVida(novaPocao);
-                    System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
-                } else if(chances < 3.5){
-                    System.out.println("Você encontrou uma armadura!");
-
-                    jogador.setArmadura(gerarArmadura());
-                    System.out.printf("Você começou a usar uma armadura de %s%n", jogador.getArmadura().getNome());
-                } else {
-                    System.out.println("Você encontrou uma arma!");
-                }
-            } else if(chances < 7){
-                System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda | x - Sair): ");
-                // Escolher caminhos 1 ou 2
+            if(!explorando.equals("s")){
+                System.out.println("[ERRO]: Opção inválida!");
             } else {
-                System.out.println("Nada encontrado.");
+                if(chances < 2){
+                    System.out.println("Você encontrou um inimigo!");
+                    // Batalhar();
+                } else if(chances < 5){
+                    if(chances < 2.5){
+                        System.out.println("Você encontrou uma poção!");
+
+                        int randomico = (int)(Math.random()*10);
+                        Pocao novaPocao = new Pocao("Água", randomico);
+
+                        jogador.recuperarVida(novaPocao);
+                        System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
+                    } else if(chances < 3.5){
+                        System.out.println("Você encontrou uma armadura!");
+
+                        jogador.setArmadura(gerarArmadura());
+                        System.out.printf("Você começou a usar uma armadura de %s%n", jogador.getArmadura().getNome());
+                    } else {
+                        System.out.println("Você encontrou uma arma!");
+                    }
+                } else if(chances < 7){
+                    System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda): ");
+                    String lado = entrada.next();
+                    if(!lado.equals("e") || !lado.equals("d")){
+                        System.out.println("Opção inválida");
+                    } else if(lado.equals("e")){
+                        System.out.println("Você virou para a esquerda.");
+                    } else {
+                        System.out.println("Você virou para a direita.");
+                    }
+                } else {
+                    System.out.println("Nada encontrado.");
+                }
             }
 
+            System.out.printf("%nVida: %s%n", jogador.getVida());
+            System.out.printf("Arma: %s%n", jogador.getArma() == null ? "nenhuma" : jogador.getArma().getNome());
+
+            System.out.print("Explorar? (s - Sim | n - Sair): ");
             explorando = entrada.next();
         }
     }
