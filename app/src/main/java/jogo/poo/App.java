@@ -32,6 +32,7 @@ public class App {
         System.out.print("Escolha seu nickname: ");
         String nome = entrada.nextLine();
 
+
         Personagem jogador = new Personagem(nome);
 
         System.out.print("Explorar? (s - Sim | n - Sair): ");
