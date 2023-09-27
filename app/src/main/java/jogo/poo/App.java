@@ -3,6 +3,40 @@ package jogo.poo;
 import java.util.Scanner;
 
 public class App {
+    private Personagem jogador;
+
+    public void setJogador(Personagem jogador) {
+        this.jogador = jogador;
+    }
+
+    public Personagem getJogador() {
+        return jogador;
+    }
+
+    Pocao gerarPocao(){
+        int cura = (int)(Math.random()*5 + 1);
+        String nome = null;
+        switch(cura){
+            case 1:
+                nome = "comun";
+                break;
+            case 2:
+                nome = "ácida";
+                break;
+            case 3:
+                nome = "rara";
+                break;
+            case 4:
+                nome = "épica";
+                break;
+            case 5:
+                nome = "divina";
+                break;
+        }
+
+        return new Pocao(nome, cura);
+    }
+
     Armadura gerarArmadura(){
         int nivel = (int)(Math.random()*5 + 1);
         String nomeDaArmadura = null;
@@ -33,7 +67,7 @@ public class App {
         String nome = entrada.nextLine();
 
 
-        Personagem jogador = new Personagem(nome);
+        setJogador(new Personagem(nome));
 
         System.out.print("Explorar? (s - Sim | n - Sair): ");
         String explorando = entrada.next();
@@ -51,10 +85,7 @@ public class App {
                     if(chances < 2.5){
                         System.out.println("Você encontrou uma poção!");
 
-                        int randomico = (int)(Math.random()*10);
-                        Pocao novaPocao = new Pocao("Água", randomico);
-
-                        jogador.recuperarVida(novaPocao);
+                        jogador.recuperarVida(gerarPocao());
                         System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
                     } else if(chances < 3.5){
                         System.out.println("Você encontrou uma armadura!");
@@ -79,8 +110,8 @@ public class App {
                 }
             }
 
-            System.out.printf("%nVida: %s%n", jogador.getVida());
-            System.out.printf("Arma: %s%n", jogador.getArma() == null ? "nenhuma" : jogador.getArma().getNome());
+            System.out.printf("%nVida: %s%n", getJogador().getVida());
+            System.out.printf("Arma: %s%n", getJogador().getArma() == null ? "nenhuma" : jogador.getArma().getNome());
 
             System.out.print("Explorar? (s - Sim | n - Sair): ");
             explorando = entrada.next();
