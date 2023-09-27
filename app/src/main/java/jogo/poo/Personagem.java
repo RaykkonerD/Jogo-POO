@@ -14,6 +14,7 @@ public class Personagem {
         this.nome = nome;
         this.vida = 100;
         this.mana = 100;
+        this.inventario = new ArrayList<Item>();
     }
 
     public String getNome() {
