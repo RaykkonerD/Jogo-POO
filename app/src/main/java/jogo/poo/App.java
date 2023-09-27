@@ -82,21 +82,21 @@ public class App {
                 System.out.println("[ERRO]: Opção inválida!");
             } else {
                 if(chances < 2){
-                    System.out.println("Você encontrou um inimigo!");
+                    System.out.println("🤺 Você encontrou um inimigo!");
                     // Batalhar();
                 } else if(chances < 5){
                     if(chances < 2.5){
-                        System.out.println("Você encontrou uma poção!");
+                        System.out.println("🧪 Você encontrou uma poção!");
 
                         this.jogador.adicionarAoInventario(gerarPocao());
                         // System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
                     } else if(chances < 3.5){
-                        System.out.println("Você encontrou uma armadura!");
+                        System.out.println("🛡️ Você encontrou uma armadura!");
 
                         this.jogador.adicionarAoInventario(gerarArmadura());
                         // System.out.printf("Você começou a usar uma armadura de %s%n", jogador.getArmadura().getNome());
                     } else {
-                        System.out.println("Você encontrou uma arma!");
+                        System.out.println("🗡️ Você encontrou uma arma!");
                     } 
                 } else if(chances < 7){
                     System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda): ");
