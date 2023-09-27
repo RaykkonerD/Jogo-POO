@@ -35,30 +35,39 @@ public class App {
         Personagem jogador = new Personagem(nome);
 
         double chances = Math.random()*10;
+        System.out.print("Explorar? (s - Sim | n - Sair): ");
+        String explorando = entrada.next();
 
-        if(chances < 2){
-            System.out.println("Você encontrou um inimigo!");
-            // Batalhar();
-        } else if(chances < 5){
-            if(chances < 2.5){
-                System.out.println("Você encontrou uma poção!");
+        while(explorando != "n"){
 
-                int randomico = parseInt(Math.random()*10);
-                Pocao novaPocao = new Pocao(randomico);
+            if(chances < 2){
+                System.out.println("Você encontrou um inimigo!");
+                // Batalhar();
+            } else if(chances < 5){
+                if(chances < 2.5){
+                    System.out.println("Você encontrou uma poção!");
 
-                jogador.recuperarVida(novaPocao);
-                System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
-            } else if(chances < 3.5){
-                System.out.println("Você encontrou uma armadura!");
+                    int randomico = (int)(Math.random()*10);
+                    Pocao novaPocao = new Pocao("Água", randomico);
+
+                    jogador.recuperarVida(novaPocao);
+                    System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
+                } else if(chances < 3.5){
+                    System.out.println("Você encontrou uma armadura!");
+
+                    jogador.setArmadura(gerarArmadura());
+                    System.out.printf("Você começou a usar uma armadura de %s%n", jogador.getArmadura().getNome());
+                } else {
+                    System.out.println("Você encontrou uma arma!");
+                }
+            } else if(chances < 7){
+                System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda | x - Sair): ");
+                // Escolher caminhos 1 ou 2
             } else {
-                System.out.println("Você encontrou uma arma!");
+                System.out.println("Nada encontrado.");
             }
-        } else if(chances < 7){
-            System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda | x - Sair): ");
-            // Escolher caminhos 1 ou 2
-        } else {
-            System.out.println("Nada encontrado. Continuar? (s - Sim | n - Não | x - Sair): ");
-            // Escolha se continuar ou não
+
+            explorando = entrada.next();
         }
     }
 
