@@ -80,7 +80,12 @@ public class Personagem {
     }
 
     public void recuperarVida(Pocao pocao) {
-        this.setVida(this.getVida() + pocao.getCura());
+        if((this.getVida() + pocao.getCura()) <= 100){
+            this.setVida(this.getVida() + pocao.getCura());
+        } else {
+            this.setVida(100);
+        }
+        
         System.out.printf("%s tomou %s e recuperou %d pontos de vida.%n", this.getNome(), pocao.getNome(),
                 pocao.getCura());
     }

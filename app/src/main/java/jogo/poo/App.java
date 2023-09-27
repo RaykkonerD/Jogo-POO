@@ -3,20 +3,61 @@ package jogo.poo;
 import java.util.Scanner;
 
 public class App {
+    Armadura gerarArmadura(){
+        int nivel = (int)(Math.random()*5 + 1);
+        String nomeDaArmadura = null;
+        switch(nivel){
+            case 1:
+                nomeDaArmadura = "couro";
+                break;
+            case 2:
+                nomeDaArmadura = "ferro";
+                break;
+            case 3:
+                nomeDaArmadura = "ouro";
+                break;
+            case 4:
+                nomeDaArmadura = "diamante";
+                break;
+            case 5:
+                nomeDaArmadura = "vibranio";
+                break;
+        }
+
+        return new Armadura(nomeDaArmadura, nivel);
+    }
+
     void iniciar() {
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("Escolha seu nickname: ");
+        String nome = entrada.nextLine();
+
+        Personagem jogador = new Personagem(nome);
+
         double chances = Math.random()*10;
 
-        if(chances < 3){
+        if(chances < 2){
             System.out.println("Você encontrou um inimigo!");
             // Batalhar();
         } else if(chances < 5){
-            System.out.println("Você encontrou um item!");
-            // PegarItem();
+            if(chances < 2.5){
+                System.out.println("Você encontrou uma poção!");
+
+                int randomico = parseInt(Math.random()*10);
+                Pocao novaPocao = new Pocao(randomico);
+
+                jogador.recuperarVida(novaPocao);
+                System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
+            } else if(chances < 3.5){
+                System.out.println("Você encontrou uma armadura!");
+            } else {
+                System.out.println("Você encontrou uma arma!");
+            }
         } else if(chances < 7){
-            System.out.println("Você encontrou uma bifurcação!");
-            // Escolher caminhon 1 ou 2
+            System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda | x - Sair): ");
+            // Escolher caminhos 1 ou 2
         } else {
-            System.out.println("Nada encontrado. Continuar? (s - Sim | n - Não)");
+            System.out.println("Nada encontrado. Continuar? (s - Sim | n - Não | x - Sair): ");
             // Escolha se continuar ou não
         }
     }
@@ -30,7 +71,10 @@ public class App {
         System.out.println("3 - Sair");
         System.out.print("Opção: ");
 
-        return entrada.nextInt();
+        int opcao = entrada.nextInt();
+        System.out.println();
+
+        return opcao;
     }
 
     public static void main(String[] args) {
