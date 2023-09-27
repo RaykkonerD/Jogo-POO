@@ -6,6 +6,7 @@ public class Personagem {
     private int mana;
     private Arma arma;
     private Armadura armadura;
+    private List<Item> inventario;
 
     public Personagem(String nome) {
         this.nome = nome;
