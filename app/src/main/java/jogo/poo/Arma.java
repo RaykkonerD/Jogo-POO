@@ -1,37 +1,28 @@
 package jogo.poo;
 
-public class Arma {
-    private String nome;
+public class Arma extends Item {
     private int dano;
     private int probabilidadeDeDano;
     private int manaGasto;
 
     public Arma(String nome, int dano) {
-        this.nome = nome;
+        super(nome);
         this.dano = dano;
         this.probabilidadeDeDano = 100;
     }
 
     public Arma(String nome, int dano, int manaGasto) {
-        this.nome = nome;
+        super(nome);
         this.dano = dano;
         this.probabilidadeDeDano = 100;
         this.manaGasto = manaGasto;
     }
 
     public Arma(String nome, int dano, int manaGasto, int probabilidadeDeDano) {
-        this.nome = nome;
+        super(nome);
         this.dano = dano;
         this.probabilidadeDeDano = probabilidadeDeDano;
         this.manaGasto = manaGasto;
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public int getDano() {

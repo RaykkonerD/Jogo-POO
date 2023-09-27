@@ -1,12 +1,14 @@
 package jogo.poo;
 
+import java.util.ArrayList;
+
 public class Personagem {
     private String nome;
     private int vida;
     private int mana;
     private Arma arma;
     private Armadura armadura;
-    private List<Item> inventario;
+    private ArrayList<Item> inventario;
 
     public Personagem(String nome) {
         this.nome = nome;
@@ -52,6 +54,14 @@ public class Personagem {
 
     public void setArmadura(Armadura armadura) {
         this.armadura = armadura;
+    }
+
+    public ArrayList<Item> getInventario(){
+        return this.inventario;
+    }
+
+    public void adicionarAoInventario(Item item){
+        this.inventario.add(item);
     }
 
     public void receberDano(int dano) {

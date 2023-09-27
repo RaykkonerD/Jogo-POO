@@ -1,20 +1,11 @@
 package jogo.poo;
 
-public class Armadura {
-    String nome;
-    int nivel;
+public class Armadura extends Item {
+    private int nivel;
 
     public Armadura(String nome, int nivel) {
+        super(nome);
         this.nivel = nivel;
-        this.nome = nome;
-    }
-
-    public String getNome(){
-        return this.nome;
-    }
-
-    public void setNome(String nome){
-        this.nome = nome;
     }
 
     public int getNivelDaProtecao() {
