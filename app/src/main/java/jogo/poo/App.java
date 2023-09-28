@@ -61,7 +61,45 @@ public class App {
         return new Armadura(nomeDaArmadura, nivel);
     }
 
-    void iniciar() {
+    Arma gerarArma(){
+        int dano = (int)(Math.random()*5 + 1);
+        String nome = null;
+        switch(dano){
+            case 1:
+                nome = "soco-inglês";
+                break;
+            case 2:
+                nome = "faca";
+                break;
+            case 3:
+                nome = "espada";
+                break;
+            case 4:
+                nome = "arco e flecha";
+                break;
+            case 5:
+                nome = "revólver";
+                break;
+        }
+
+        return new Arma(nome, dano);
+    }
+
+    public void usarItem(int posicao){ 
+        if(getJogador().getInventario().get(posicao) instanceof Arma){
+            this.jogador.setArma((Arma)getJogador().getInventario().get(posicao));
+
+            System.out.printf("Você começou a usar %s como arma%n", getJogador().getArmadura().getNome());
+        } else if(getJogador().getInventario().get(posicao) instanceof Armadura){
+            this.jogador.setArmadura((Armadura)getJogador().getInventario().get(posicao));
+
+            System.out.printf("Você começou a usar uma armadura de %s%n", getJogador().getArmadura().getNome());
+        } else {
+            this.jogador.recuperarVida((Pocao)getJogador().getInventario().get(posicao));
+        }
+    }
+
+    public void iniciar() {
         Scanner entrada = new Scanner(System.in);
 
         if(jogador == null){ 
@@ -94,9 +132,10 @@ public class App {
                         System.out.println("🛡️ Você encontrou uma armadura!");
 
                         this.jogador.adicionarAoInventario(gerarArmadura());
-                        // System.out.printf("Você começou a usar uma armadura de %s%n", jogador.getArmadura().getNome());
                     } else {
                         System.out.println("🗡️ Você encontrou uma arma!");
+
+                        this.jogador.adicionarAoInventario(gerarArma());
                     } 
                 } else if(chances < 7){
                     System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda): ");
@@ -111,20 +150,16 @@ public class App {
                 } else {
                     System.out.println("Nada encontrado.");
                 }
-
-                // Teste
-                if(this.jogador.getInventario() != null){
-
-                    for(Item item : this.jogador.getInventario()){
-                        System.out.println(item.getNome());
-                    }
-                }
             }
 
-            System.out.printf("%nVida: %s%n", getJogador().getVida());
-            System.out.printf("Arma: %s%n", getJogador().getArma() == null ? "nenhuma" : jogador.getArma().getNome());
+            Arma arma = getJogador().getArma();
+            Armadura armadura = getJogador().getArmadura();
 
-            System.out.print("Explorar? (s - Sim | n - Sair): ");
+            System.out.printf("%nVida: %s%n", getJogador().getVida());
+            System.out.printf("Arma: %s%n", arma == null ? "nenhuma" : arma.getNome() + " dano " + arma.getDano() + " acerto " + arma.getProbabilidadeDeDano() + "%");
+            System.out.printf("Armadura: %s%n", armadura == null ? "nenhuma" : armadura.getNome() + " nível " + armadura.getNivelDaProtecao());
+
+            System.out.print("👣 Explorar? (s/n): ");
             explorando = entrada.next();
         }
     }
@@ -178,16 +213,43 @@ public class App {
             switch(opcao){
                 case 1:
                     if(this.jogador != null && this.jogador.getInventario() != null){
-                        System.out.println("Inventario: " + this.jogador.getInventario());
+                        System.out.print("Inventario: "); 
+                        getJogador().getInventario().forEach((item) -> System.out.printf(getJogador().getInventario().indexOf(item) == getJogador().getInventario().size()-1 ? "%s%n" : "%s,", item.getNome()));
+                        System.out.print("Usar item? (s/n)");
+                        String resposta = entrada.next();
+
+                        if(resposta.equals("s")){
+                            System.out.print("Posição do item: ");
+                            int posicao = entrada.nextInt();
+                            while(posicao > this.jogador.getInventario().size() || posicao < 1){
+                                System.out.println("[ERRO]: Posição inválida!");
+                                posicao = entrada.nextInt();
+                            }
+                            
+                            usarItem(posicao-1);
+                        }
                     } else {
                         System.out.println("[Inventário vazio]");
                     }
                     break;
                 case 2:
                     if(this.jogador != null){
-                        System.out.println("Nome: " + this.jogador.getNome());
-                        System.out.println("Arma: " + this.jogador.getArma() != null ? this.jogador.getArma().getNome() + " dano " + this.jogador.getArma().getDano() : "nenhuma");
-                        System.out.println("Armadura: " + this.jogador.getArmadura() != null ? this.jogador.getArmadura().getNome() + " nível " + this.jogador.getArmadura().getNivelDaProtecao() : "nenhuma");
+                        System.out.println("=== Perfil ===");
+                        System.out.printf("Nome: %s%n", this.jogador.getNome());
+                        
+                        if(this.jogador.getArma() != null){
+                            System.out.printf("Arma: %s dano %d%n", this.jogador.getArma().getNome(), this.jogador.getArma().getDano());
+                        } else {
+                            System.out.println("Arma: nenhuma");
+                        }
+
+                        if(this.jogador.getArmadura() != null){
+                            System.out.printf("Armadura: %s nível %d%n", this.jogador.getArmadura().getNome(), this.jogador.getArmadura().getNivelDaProtecao());
+                        } else {
+                            System.out.println("Armadura: nenhuma");
+                        }
+
+                        System.out.println();
                     } else {
                         System.out.println("[Jogador não definido]");
                     }
