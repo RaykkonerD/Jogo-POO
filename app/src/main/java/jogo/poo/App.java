@@ -123,16 +123,26 @@ public class App {
 
     public void usarItem(int posicao){ 
         if(getJogador().getInventario().get(posicao) instanceof Arma){
+            if(getJogador().getArma() != null){
+                this.jogador.adicionarAoInventario(getJogador().getArma());
+            }
+
             this.jogador.setArma((Arma)getJogador().getInventario().get(posicao));
 
             System.out.printf("Você começou a usar %s como arma%n", getJogador().getArma().getNome());
         } else if(getJogador().getInventario().get(posicao) instanceof Armadura){
+            if(getJogador().getArmadura() != null){
+                this.jogador.adicionarAoInventario(getJogador().getArmadura());
+            }
+
             this.jogador.setArmadura((Armadura)getJogador().getInventario().get(posicao));
 
             System.out.printf("Você começou a usar uma %s%n", getJogador().getArmadura().getNome());
         } else {
             this.jogador.recuperarVida((Pocao)getJogador().getInventario().get(posicao));
         }
+
+        this.jogador.removerDoInventario(posicao - 1);
     }
 
     public void iniciar() {

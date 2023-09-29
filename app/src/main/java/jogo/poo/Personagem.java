@@ -65,6 +65,10 @@ public class Personagem {
         this.inventario.add(item);
     }
 
+    public void removerDoInventario(int index){
+        this.inventario.remove(index);
+    }
+
     public void receberDano(int dano) {
         double chances = Math.random() * 10;
 
