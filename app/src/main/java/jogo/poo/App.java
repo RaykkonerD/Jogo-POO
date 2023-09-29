@@ -18,50 +18,51 @@ public class App {
         String nome = null;
         switch(cura){
             case 1:
-                nome = "comun";
+                nome = "poção comun";
                 break;
             case 2:
-                nome = "ácida";
+                nome = "poção ácida";
                 break;
             case 3:
-                nome = "rara";
+                nome = "poção rara";
                 break;
             case 4:
-                nome = "épica";
+                nome = "poção épica";
                 break;
             case 5:
-                nome = "divina";
+                nome = "poção divina";
                 break;
         }
 
-        return new Pocao(nome, cura);
+        return new Pocao(nome, cura*10);
     }
 
     Armadura gerarArmadura(){
         int nivel = (int)(Math.random()*5 + 1);
-        String nomeDaArmadura = null;
+        String nome = null;
         switch(nivel){
             case 1:
-                nomeDaArmadura = "couro";
+                nome = "armadura de couro";
                 break;
             case 2:
-                nomeDaArmadura = "ferro";
+                nome = "armadura de ferro";
                 break;
             case 3:
-                nomeDaArmadura = "ouro";
+                nome = "armadura de ouro";
                 break;
             case 4:
-                nomeDaArmadura = "diamante";
+                nome = "armadura de diamante";
                 break;
             case 5:
-                nomeDaArmadura = "vibranio";
+                nome = "armadura de vibranio";
                 break;
         }
 
-        return new Armadura(nomeDaArmadura, nivel);
+        return new Armadura(nome, nivel);
     }
 
     Arma gerarArma(){
+        // Implementar armas que gastam mana e com probabilidade de acerto
         int dano = (int)(Math.random()*5 + 1);
         String nome = null;
         switch(dano){
@@ -85,15 +86,50 @@ public class App {
         return new Arma(nome, dano);
     }
 
+    public void batalhar(){
+        Personagem inimigo = new Personagem("Curupira");
+        inimigo.setArma(gerarArma());
+        Scanner entrada = new Scanner(System.in);
+        
+        while(inimigo.getVida() > 0 && getJogador().getVida() > 0){ 
+            inimigo.atacar(this.jogador);
+            System.out.println();
+            System.out.print("👊 Atacar (s - sim | o - opcoes | n - sair): ");
+            String opcao = entrada.next();
+            System.out.println();
+
+            while(!opcao.equals("s") && !opcao.equals("o") && !opcao.equals("n")){
+                System.out.println("[ERRO]: Opção inválida!");
+                System.out.print("👊 Atacar (s/o/n): ");
+                opcao = entrada.next();
+                System.out.println();
+            }
+
+            if(opcao.equals("s")){
+                this.jogador.atacar(inimigo);
+            } else if(opcao.equals("o")){
+                opcoes();
+            } else {
+                return;
+            }
+        }
+
+        if(inimigo.getVida() == 0){ 
+            System.out.println("Você o venceu!");
+        } else {
+            System.out.println("Você perdeu!");
+        }
+    }
+
     public void usarItem(int posicao){ 
         if(getJogador().getInventario().get(posicao) instanceof Arma){
             this.jogador.setArma((Arma)getJogador().getInventario().get(posicao));
 
-            System.out.printf("Você começou a usar %s como arma%n", getJogador().getArmadura().getNome());
+            System.out.printf("Você começou a usar %s como arma%n", getJogador().getArma().getNome());
         } else if(getJogador().getInventario().get(posicao) instanceof Armadura){
             this.jogador.setArmadura((Armadura)getJogador().getInventario().get(posicao));
 
-            System.out.printf("Você começou a usar uma armadura de %s%n", getJogador().getArmadura().getNome());
+            System.out.printf("Você começou a usar uma %s%n", getJogador().getArmadura().getNome());
         } else {
             this.jogador.recuperarVida((Pocao)getJogador().getInventario().get(posicao));
         }
@@ -110,32 +146,37 @@ public class App {
             System.out.printf("=> Bem vindo de volta, %s!%n", this.jogador.getNome());
         }
 
-        System.out.print("👣 Explorar? (s - Sim | n - Sair): ");
+        System.out.print("👣 Explorar? (s - Sim | o - opções | n - Sair): ");
         String explorando = entrada.next();
 
         while(!explorando.equals("n")){
             double chances = Math.random()*10;
 
-            if(!explorando.equals("s")){
+            if(!explorando.equals("s") && !explorando.equals("o")){
                 System.out.println("[ERRO]: Opção inválida!");
+            } else if(explorando.equals("o")){
+                opcoes();
             } else {
                 if(chances < 2){
                     System.out.println("🤺 Você encontrou um inimigo!");
-                    // Batalhar();
+                    batalhar();
                 } else if(chances < 5){
                     if(chances < 2.5){
-                        System.out.println("🧪 Você encontrou uma poção!");
+                        Pocao novaPocao = gerarPocao();
+                        System.out.printf("🧪 Você encontrou uma poção! %s%n", novaPocao.getNome());
 
-                        this.jogador.adicionarAoInventario(gerarPocao());
+                        this.jogador.adicionarAoInventario(novaPocao);
                         // System.out.printf("Vida recuperada. (Vida: %d)%n", jogador.getVida());
                     } else if(chances < 3.5){
-                        System.out.println("🛡️ Você encontrou uma armadura!");
+                        Armadura novaArmadura = gerarArmadura();
+                        System.out.printf("🛡️ Você encontrou uma armadura! %s%n", novaArmadura.getNome());
 
-                        this.jogador.adicionarAoInventario(gerarArmadura());
+                        this.jogador.adicionarAoInventario(novaArmadura);
                     } else {
-                        System.out.println("🗡️ Você encontrou uma arma!");
+                        Arma novaArma = gerarArma();
+                        System.out.printf("🗡️ Você encontrou uma arma! %s%n", novaArma.getNome());
 
-                        this.jogador.adicionarAoInventario(gerarArma());
+                        this.jogador.adicionarAoInventario(novaArma);
                     } 
                 } else if(chances < 7){
                     System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda): ");
@@ -159,7 +200,7 @@ public class App {
             System.out.printf("Arma: %s%n", arma == null ? "nenhuma" : arma.getNome() + " dano " + arma.getDano() + " acerto " + arma.getProbabilidadeDeDano() + "%");
             System.out.printf("Armadura: %s%n", armadura == null ? "nenhuma" : armadura.getNome() + " nível " + armadura.getNivelDaProtecao());
 
-            System.out.print("👣 Explorar? (s/n): ");
+            System.out.print("👣 Explorar? (s/o/n): ");
             explorando = entrada.next();
         }
     }
@@ -168,7 +209,8 @@ public class App {
         Scanner entrada = new Scanner(System.in);
         int opcao;
 
-        while(true){
+        while(true){ 
+            System.out.println();
             System.out.println("=== Menu ===");
             System.out.println("1 - Iniciar");
             System.out.println("2 - opções");
@@ -201,6 +243,7 @@ public class App {
         int opcao;
 
         while(true){
+            System.out.println();
             System.out.println("=== Opções ===");
             System.out.println("1 - Ver inventário");
             System.out.println("2 - Perfil");
@@ -214,8 +257,8 @@ public class App {
                 case 1:
                     if(this.jogador != null && this.jogador.getInventario() != null){
                         System.out.print("Inventario: "); 
-                        getJogador().getInventario().forEach((item) -> System.out.printf(getJogador().getInventario().indexOf(item) == getJogador().getInventario().size()-1 ? "%s%n" : "%s,", item.getNome()));
-                        System.out.print("Usar item? (s/n)");
+                        getJogador().getInventario().forEach((item) -> System.out.printf(getJogador().getInventario().indexOf(item) == getJogador().getInventario().size()-1 ? "%s%n" : "%s, ", item.getNome()));
+                        System.out.print("Usar item? (s/n): ");
                         String resposta = entrada.next();
 
                         if(resposta.equals("s")){
@@ -234,6 +277,7 @@ public class App {
                     break;
                 case 2:
                     if(this.jogador != null){
+                        System.out.println();
                         System.out.println("=== Perfil ===");
                         System.out.printf("Nome: %s%n", this.jogador.getNome());
                         
