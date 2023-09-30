@@ -63,27 +63,40 @@ public class App {
 
     Arma gerarArma(){
         // Implementar armas que gastam mana e com probabilidade de acerto
-        int dano = (int)(Math.random()*5 + 1);
+        int tipo = (int)(Math.random()*5 + 1);
         String nome = null;
-        switch(dano){
+        int dano = 0;
+        int manaGasto = 0;
+        int probabilidadeDeDano = 100;
+
+        switch(tipo){
             case 1:
                 nome = "soco-inglês";
+                dano = 3;
                 break;
             case 2:
                 nome = "faca";
+                dano = 5;
                 break;
             case 3:
                 nome = "espada";
+                manaGasto = 3;
+                dano = 10;
                 break;
             case 4:
                 nome = "arco e flecha";
+                dano = 15;
+                probabilidadeDeDano = 50;
                 break;
             case 5:
                 nome = "revólver";
+                dano = 20;
+                manaGasto = 10;
+                probabilidadeDeDano = 25;
                 break;
         }
 
-        return new Arma(nome, dano);
+        return new Arma(nome, dano, manaGasto, probabilidadeDeDano);
     }
 
     public void batalhar(){
