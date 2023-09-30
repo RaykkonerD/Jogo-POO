@@ -155,7 +155,7 @@ public class App {
             this.jogador.recuperarVida((Pocao)getJogador().getInventario().get(posicao));
         }
 
-        this.jogador.removerDoInventario(posicao - 1);
+        this.jogador.removerDoInventario(posicao);
     }
 
     public void iniciar() {
@@ -202,7 +202,7 @@ public class App {
                         this.jogador.adicionarAoInventario(novaArma);
                     } 
                 } else if(chances < 7){
-                    System.out.println("Você encontrou uma bifurcação! (d - Direita | e - Esquerda): ");
+                    System.out.println("Você encontrou uma bifurcação! (e - esquerda | d - direita): ");
                     String lado = entrada.next();
                     if(!lado.equals("e") && !lado.equals("d")){
                         System.out.println("Opção inválida");
@@ -278,7 +278,7 @@ public class App {
 
             switch(opcao){
                 case 1:
-                    if(this.jogador != null && this.jogador.getInventario() != null){
+                    if(this.jogador != null && this.jogador.getInventario().size() > 0){
                         System.out.print("Inventario: "); 
                         getJogador().getInventario().forEach((item) -> System.out.printf(getJogador().getInventario().indexOf(item) == getJogador().getInventario().size()-1 ? "%s%n" : "%s, ", item.getNome()));
                         System.out.print("Usar item? (s/n): ");
