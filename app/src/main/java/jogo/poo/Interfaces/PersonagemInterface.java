@@ -1,4 +1,6 @@
-package jogo.poo;
+package jogo.poo.Interfaces;
+
+import jogo.poo.*;
 
 import java.util.ArrayList;
 

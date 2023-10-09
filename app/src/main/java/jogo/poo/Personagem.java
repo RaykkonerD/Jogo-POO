@@ -1,8 +1,10 @@
 package jogo.poo;
 
+import jogo.poo.Interfaces.PersonagemInterface;
+
 import java.util.ArrayList;
 
-public class Personagem implements PersonagemInterface{
+public class Personagem implements PersonagemInterface {
     private String nome;
     private int vida;
     private int mana;
