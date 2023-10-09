@@ -38,7 +38,7 @@ public class App {
     }
 
     Armadura gerarArmadura(){
-        int nivel = (int)(Math.random()*5 + 1);
+        int nivel = (int)(Math.random() * 5 + 1);
         String nome = null;
         switch(nivel){
             case 1:

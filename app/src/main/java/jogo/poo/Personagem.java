@@ -2,7 +2,7 @@ package jogo.poo;
 
 import java.util.ArrayList;
 
-public class Personagem {
+public class Personagem implements PersonagemInterface{
     private String nome;
     private int vida;
     private int mana;
